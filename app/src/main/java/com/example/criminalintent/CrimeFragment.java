@@ -56,7 +56,7 @@ public class CrimeFragment extends Fragment {
         mDateButton.setText(mCrime.getDate().toString());
         mDateButton.setEnabled(false);
 
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved_check);
         mSolvedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // in case issues refer to page 147 of the android programming book to fix it
             mCrime.setSolved(isChecked);
