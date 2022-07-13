@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CrimeListFragment extends Fragment {
+    private static final int REQUEST_CRIME = 1;
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
 
@@ -35,12 +37,23 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI(){
         CrimeLab crimelab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimelab.getCrimes();
 
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if(mAdapter == null){
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -72,6 +85,7 @@ public class CrimeListFragment extends Fragment {
             Intent intent = MainActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(intent);
         }
+
     }
 
     private class CrimeHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -102,6 +116,13 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CRIME){
+            //
+        }
+    }
+
     private class CrimeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private List<Crime> mCrimes;
 
@@ -120,6 +141,8 @@ public class CrimeListFragment extends Fragment {
             }
 
         }
+
+
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {

@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,10 @@ public class CrimeFragment extends Fragment {
         UUID crimeId = (UUID) getActivity().getIntent()
                 .getSerializableExtra(MainActivity.EXTRA_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+    }
+
+    public void returnResult(){
+        getActivity().setResult(Activity.RESULT_OK, null);
     }
 
     @Nullable
