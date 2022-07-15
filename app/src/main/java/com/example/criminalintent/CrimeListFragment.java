@@ -23,6 +23,7 @@ public class CrimeListFragment extends Fragment {
     private static final int REQUEST_CRIME = 1;
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
+    private int lastClicked;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +52,9 @@ public class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.setAdapter(mAdapter);
         }else{
-            mAdapter.notifyDataSetChanged();
+            //mAdapter.notifyDataSetChanged();
+
+            mAdapter.notifyItemChanged(lastClicked);
         }
 
     }
@@ -83,6 +86,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Intent intent = MainActivity.newIntent(getActivity(), mCrime.getId());
+            lastClicked = getAbsoluteAdapterPosition();
             startActivity(intent);
         }
 
@@ -112,6 +116,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Intent intent = MainActivity.newIntent(getActivity(), mCrime.getId());
+            lastClicked = getAbsoluteAdapterPosition();
             startActivity(intent);
         }
     }
@@ -142,8 +147,6 @@ public class CrimeListFragment extends Fragment {
 
         }
 
-
-
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             Crime crime = mCrimes.get(position);
@@ -167,5 +170,6 @@ public class CrimeListFragment extends Fragment {
             Crime crime = mCrimes.get(position);
             return crime.getmRequiresPolice();
         }
+
     }
 }
