@@ -8,11 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
 
 import java.util.List;
 import java.util.UUID;
@@ -41,7 +38,8 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentStateAdapter(this) {
+        // i'm not sure whether use fragmentManager or use 'this' instead. Works both ways
+        mViewPager.setAdapter(new FragmentStateAdapter(fragmentManager, getLifecycle()) {
             @Override
             public int getItemCount() {
                 return mCrimes.size();
