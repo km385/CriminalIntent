@@ -3,6 +3,8 @@ package com.example.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity{
     // it was private in the book but i cannot access it from CrimeFragment.java
     public static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
 
@@ -33,6 +35,29 @@ public class CrimePagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crime_pager);
 
         UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+
+        Button first = (Button) findViewById(R.id.goFirst);
+
+        first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                mViewPager.setCurrentItem(0);
+            }
+        });
+
+        Button last = (Button) findViewById(R.id.goLast);
+
+        last.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mViewPager.getCurrentItem()==99){
+                    last.setEnabled(false);
+                }
+                mViewPager.setCurrentItem(mCrimes.size()-1);
+            }
+        });
 
         mViewPager = (ViewPager2) findViewById(R.id.crime_view_pager);
 
@@ -54,12 +79,32 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         });
 
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if(position == 0){
+                    first.setEnabled(false);
+                }else{
+                    first.setEnabled(true);
+                }
+
+                if(position == 99){
+                    last.setEnabled(false);
+                }else{
+                    last.setEnabled(true);
+                }
+
+            }
+        });
+
         for (int i = 0;i < mCrimes.size();i++){
             if (mCrimes.get(i).getId().equals(crimeId)){
                 mViewPager.setCurrentItem(i);
                 break;
             }
         }
-        
+
     }
+
 }

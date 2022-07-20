@@ -53,7 +53,7 @@ public class CrimeListFragment extends Fragment {
             mCrimeRecyclerView.setAdapter(mAdapter);
         }else{
             //mAdapter.notifyDataSetChanged();
-
+            //TODO make it better
             mAdapter.notifyItemChanged(lastClicked);
         }
 
