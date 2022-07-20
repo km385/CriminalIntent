@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class CrimePagerActivity extends AppCompatActivity {
     // it was private in the book but i cannot access it from CrimeFragment.java
     public static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
 
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
     private List<Crime> mCrimes;
 
     public static Intent newIntent(Context packageContext, UUID crimeId){
@@ -35,22 +37,23 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
 
-        mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
+        mViewPager = (ViewPager2) findViewById(R.id.crime_view_pager);
 
         mCrimes = CrimeLab.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+        mViewPager.setAdapter(new FragmentStateAdapter(this) {
+            @Override
+            public int getItemCount() {
+                return mCrimes.size();
+            }
+
             @NonNull
             @Override
-            public Fragment getItem(int position) {
+            public Fragment createFragment(int position) {
                 Crime crime = mCrimes.get(position);
                 return CrimeFragment.newInstance(crime.getId());
             }
 
-            @Override
-            public int getCount() {
-                return mCrimes.size();
-            }
         });
 
         for (int i = 0;i < mCrimes.size();i++){
