@@ -1,6 +1,7 @@
 package com.example.criminalintent;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends AppCompatDialogFragment {
 
@@ -49,7 +51,19 @@ public class DatePickerFragment extends AppCompatDialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.data_picker_title)
-                .setPositiveButton(android.R.string.ok, null)
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                int year = mDatePicker.getYear();
+                                int month = mDatePicker.getMonth();
+                                int day = mDatePicker.getDayOfMonth();
+                                Date date = new GregorianCalendar(year, month, day).getTime();
+                                Bundle result = new Bundle();
+                                result.putSerializable("date", date);
+                                getParentFragmentManager().setFragmentResult("requestKey", result);
+                            }
+                        })
                 .create();
     }
 }

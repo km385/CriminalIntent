@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
@@ -27,7 +29,6 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
-
     public static CrimeFragment newInstance(UUID crimeId){
         Bundle args = new Bundle();
         args.putSerializable(ARG_CRIME_ID, crimeId);
@@ -42,6 +43,8 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+
+
     }
 
     public void returnResult(){
@@ -88,6 +91,18 @@ public class CrimeFragment extends Fragment {
                 dialog.show(manager, DIALOG_DATE);
             }
         });
+
+        // in the official guide this method was used in onCreate() but here works as well
+        getChildFragmentManager()
+                .setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Date date = (Date) result.getSerializable("date");
+                        mCrime.setDate(date);
+                        mDateButton.setText(mCrime.getDate().toString());
+                    }
+                });
+
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved_check);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
