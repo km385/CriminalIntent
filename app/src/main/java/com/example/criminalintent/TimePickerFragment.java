@@ -55,6 +55,7 @@ public class TimePickerFragment extends AppCompatDialogFragment {
                 .inflate(R.layout.dialog_time, null);
 
         mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_picker);
+        mTimePicker.setIs24HourView(true);
 
 
         return new AlertDialog.Builder(getActivity())
@@ -71,7 +72,7 @@ public class TimePickerFragment extends AppCompatDialogFragment {
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, day);
                         calendar.set(Calendar.MINUTE, minute);
-                        calendar.set(Calendar.HOUR, hour);
+                        calendar.set(Calendar.HOUR_OF_DAY, hour);
 
                         Bundle result = new Bundle();
                         result.putSerializable("time", calendar.getTime());

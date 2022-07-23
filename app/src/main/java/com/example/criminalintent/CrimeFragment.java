@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -105,7 +106,7 @@ public class CrimeFragment extends Fragment {
                 });
 
         mTimeButton = (Button) v.findViewById(R.id.crime_time);
-        mTimeButton.setText(mCrime.getDate().toString());
+        updateTime();
         mTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +123,7 @@ public class CrimeFragment extends Fragment {
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         Date date = (Date) result.getSerializable("time");
                         mCrime.setDate(date);
-                        mTimeButton.setText(mCrime.getDate().toString());
+                        updateTime();
                     }
                 });
 
@@ -136,7 +137,11 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    private void updateTime() {
+        mTimeButton.setText(new SimpleDateFormat("HH:mm:ss z").format(mCrime.getDate()));
+    }
+
     private void updateDate() {
-        mDateButton.setText(mCrime.getDate().toString());
+        mDateButton.setText(new SimpleDateFormat("EEEE, MMM dd, yyyy").format(mCrime.getDate()));
     }
 }
