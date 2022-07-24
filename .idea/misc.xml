@@ -5,9 +5,10 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_crime_pager.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_date_picker.xml" value="0.3494791666666667" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/dialog_date.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/dialog_date.xml" value="0.4608695652173913" />
         <entry key="app/src/main/res/layout/dialog_time.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_crime.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_crime_list.xml" value="0.25" />

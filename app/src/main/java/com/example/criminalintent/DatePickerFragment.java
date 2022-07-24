@@ -1,7 +1,5 @@
 package com.example.criminalintent;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +9,9 @@ import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class DatePickerFragment extends AppCompatDialogFragment {
 
@@ -41,6 +36,12 @@ public class DatePickerFragment extends AppCompatDialogFragment {
 
         mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_picker);
         mConfirmButton = (Button)  v.findViewById(R.id.button);
+        mConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // empty for now
+            }
+        });
 
         return v;
     }
