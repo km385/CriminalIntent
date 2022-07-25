@@ -2,9 +2,11 @@ package com.example.criminalintent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -55,6 +61,20 @@ public class CrimeFragment extends Fragment {
         getActivity().setResult(Activity.RESULT_OK, null);
     }
 
+    ActivityResultLauncher<Intent> mGetContent = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Date date = (Date) intent.getSerializableExtra("siema");
+                        mCrime.setDate(date);
+                        updateDate();
+                    }
+                }
+            });
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -92,8 +112,11 @@ public class CrimeFragment extends Fragment {
 //                        .newInstance(mCrime.getDate());
 //                dialog.show(manager, DIALOG_DATE);
 
-                Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getId());
-                startActivity(intent);
+                Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getDate());
+//                startActivity(intent);
+
+
+                mGetContent.launch(intent);
             }
         });
 
