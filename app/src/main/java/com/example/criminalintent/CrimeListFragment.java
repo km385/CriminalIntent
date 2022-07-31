@@ -1,9 +1,7 @@
 package com.example.criminalintent;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -26,11 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class CrimeListFragment extends Fragment {
     private static final int REQUEST_CRIME = 1;
@@ -288,7 +282,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemViewType(int position) {
             Crime crime = mCrimes.get(position);
-            return crime.getmRequiresPolice();
+            return crime.getRequiresPolice();
         }
 
     }

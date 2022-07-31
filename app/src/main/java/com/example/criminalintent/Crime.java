@@ -10,6 +10,7 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
     private int mRequiresPolice;
+    private String mSuspect;
 
     public Crime(){
         this(UUID.randomUUID());
@@ -48,11 +49,19 @@ public class Crime {
         mSolved = solved;
     }
 
-    public int getmRequiresPolice() {
+    public int getRequiresPolice() {
         return mRequiresPolice;
     }
 
-    public void setmRequiresPolice(int mRequiresPolice) {
-        this.mRequiresPolice = mRequiresPolice;
+    public void setRequiresPolice(int RequiresPolice) {
+        mRequiresPolice = RequiresPolice;
+    }
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String Suspect) {
+        mSuspect = Suspect;
     }
 }
