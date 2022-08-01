@@ -153,16 +153,6 @@ public class CrimeFragment extends Fragment {
                 }
             });
 
-    ActivityResultLauncher<Intent> mGetNumber = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    // do nothing
-                }
-            }
-    );
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -284,7 +274,7 @@ public class CrimeFragment extends Fragment {
                 number);
         mCallButton = (Button) v.findViewById(R.id.crime_call);
         mCallButton.setOnClickListener(view -> {
-            mGetNumber.launch(call);
+            startActivity(call);
 
         });
 
