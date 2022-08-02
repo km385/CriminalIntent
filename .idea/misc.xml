@@ -11,12 +11,13 @@
         <entry key="app/src/main/res/layout/dialog_date.xml" value="0.4608695652173913" />
         <entry key="app/src/main/res/layout/dialog_date_tablet.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/dialog_time.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_crime.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_crime.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_crime_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_crime.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item_crime1.xml" value="0.33" />
         <entry key="app/src/main/res/menu/fragment_crime.xml" value="0.1" />
         <entry key="app/src/main/res/menu/fragment_crime_list.xml" value="0.5" />
+        <entry key="app/src/main/res/xml/files.xml" value="0.1" />
       </map>
     </option>
   </component>
