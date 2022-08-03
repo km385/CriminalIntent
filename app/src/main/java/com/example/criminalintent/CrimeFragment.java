@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -329,7 +330,6 @@ public class CrimeFragment extends Fragment {
                     getActivity().grantUriPermission(activity.activityInfo.packageName,
                             uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
-                Log.d("in crimefragment", uri.toString());
                 mTakePicture.launch(captureImage);
             }
         });
@@ -340,7 +340,13 @@ public class CrimeFragment extends Fragment {
                     .newInstance(mPhotoFile.getPath());
             dialog.show(fragmentManager, "change it");
         });
-        updatePhotoView();
+
+        ViewTreeObserver observer = mPhotoView.getViewTreeObserver();
+        if (observer.isAlive()){
+            observer.addOnGlobalLayoutListener(() -> {
+                updatePhotoView();
+            });
+        }
 
         return v;
     }
@@ -381,7 +387,7 @@ public class CrimeFragment extends Fragment {
         if (mPhotoFile == null || !mPhotoFile.exists()){
             mPhotoView.setImageDrawable(null);
         }else{
-            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), mPhotoView.getWidth(), mPhotoView.getHeight());
             mPhotoView.setImageBitmap(bitmap);
         }
     }

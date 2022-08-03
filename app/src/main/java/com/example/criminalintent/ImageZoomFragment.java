@@ -2,9 +2,7 @@ package com.example.criminalintent;
 
 import android.app.Dialog;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,7 +36,6 @@ public class ImageZoomFragment extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         File file = new File(getArguments().getString(ARG_PATH));
-        Log.d("test", file.getPath());
 
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_image_zoom, null);
