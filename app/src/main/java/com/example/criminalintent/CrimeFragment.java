@@ -329,11 +329,17 @@ public class CrimeFragment extends Fragment {
                     getActivity().grantUriPermission(activity.activityInfo.packageName,
                             uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
-
+                Log.d("in crimefragment", uri.toString());
                 mTakePicture.launch(captureImage);
             }
         });
         mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
+        mPhotoView.setOnClickListener(view -> {
+            FragmentManager fragmentManager = getChildFragmentManager();
+            ImageZoomFragment dialog = ImageZoomFragment
+                    .newInstance(mPhotoFile.getPath());
+            dialog.show(fragmentManager, "change it");
+        });
         updatePhotoView();
 
         return v;

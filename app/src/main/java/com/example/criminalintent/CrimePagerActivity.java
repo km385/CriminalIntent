@@ -89,7 +89,7 @@ public class CrimePagerActivity extends AppCompatActivity{
                     first.setEnabled(true);
                 }
 
-                if(position == 99){
+                if(position == mCrimes.size()-1){
                     last.setEnabled(false);
                 }else{
                     last.setEnabled(true);
