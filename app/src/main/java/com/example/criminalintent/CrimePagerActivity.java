@@ -16,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity{
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks{
     // it was private in the book but i cannot access it from CrimeFragment.java
     public static final String EXTRA_CRIME_ID = "com.example.criminalintent.crime_id";
 
@@ -107,4 +107,8 @@ public class CrimePagerActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+
+    }
 }

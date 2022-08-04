@@ -1,6 +1,7 @@
 package com.example.criminalintent;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -61,6 +62,11 @@ public class CrimeFragment extends Fragment {
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private File mPhotoFile;
+    private Callbacks mCallbacks;
+
+    public interface Callbacks{
+        void onCrimeUpdated(Crime crime);
+    }
 
     public static CrimeFragment newInstance(UUID crimeId){
         Bundle args = new Bundle();
@@ -69,6 +75,12 @@ public class CrimeFragment extends Fragment {
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
     }
 
     @Override
@@ -113,6 +125,12 @@ public class CrimeFragment extends Fragment {
                 .updateCrime(mCrime);
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
     ActivityResultLauncher<Intent> mSetDate = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -122,6 +140,7 @@ public class CrimeFragment extends Fragment {
                         Intent intent = result.getData();
                         Date date = (Date) intent.getSerializableExtra("siema");
                         mCrime.setDate(date);
+                        updateCrime();
                         updateDate();
                     }
                 }
@@ -157,6 +176,7 @@ public class CrimeFragment extends Fragment {
                             String number = c.getString(id);
                             mCrime.setSuspect(suspect);
                             mCrime.setSuspectNumber(number);
+                            updateCrime();
                             mSuspectButton.setText(suspect);
                         } finally {
                             c.close();
@@ -177,6 +197,7 @@ public class CrimeFragment extends Fragment {
                     getActivity().revokeUriPermission(uri,
                             Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
+                    updateCrime();
                     updatePhotoView();
                 }
             }
@@ -200,6 +221,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 mCrime.setTitle(charSequence.toString());
+                updateCrime();
             }
 
             @Override
@@ -265,6 +287,7 @@ public class CrimeFragment extends Fragment {
         mSolvedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // in case issues refer to page 147 of the android programming book to fix it
             mCrime.setSolved(isChecked);
+            updateCrime();
         });
 
         mReportButton = (Button) v.findViewById(R.id.crime_report);
@@ -349,6 +372,11 @@ public class CrimeFragment extends Fragment {
         }
 
         return v;
+    }
+
+    private void updateCrime(){
+        CrimeLab.get(getActivity()).updateCrime(mCrime);
+        mCallbacks.onCrimeUpdated(mCrime);
     }
 
     private void updateTime() {
