@@ -3,6 +3,7 @@ package com.example.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +39,7 @@ public class CrimeListFragment extends Fragment {
     private TextView mCrimePlaceholder;
     private Button mCrimeButton;
     private Callbacks mCallbacks;
+    private ItemTouchHelper mItemTouchHelper;
 
     public interface Callbacks{
         void onCrimeSelected(Crime crime);
@@ -61,6 +64,22 @@ public class CrimeListFragment extends Fragment {
 
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mItemTouchHelper = new ItemTouchHelper(new ItemTouchHelper
+                .SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                final int pos = viewHolder.getAbsoluteAdapterPosition();
+                CrimeLab yo = CrimeLab.get(getActivity());
+                yo.deleteCrime(yo.getCrimes().get(pos));
+            }
+        });
+        mItemTouchHelper.attachToRecyclerView(mCrimeRecyclerView);
 
         mCrimePlaceholder = (TextView) view.findViewById(R.id.textView2);
         mCrimeButton = (Button) view.findViewById(R.id.button_add);
