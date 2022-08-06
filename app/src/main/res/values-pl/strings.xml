@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">CriminalIntent</string>
+    <string name="crime_title_hint">Wprowadź tytuł zbrodni</string>
+    <string name="crime_title_label">Tytuł</string>
+    <string name="crime_details_label">Szczegóły</string>
+    <string name="crime_solved_label">Rozwiązana</string>
+    <string name="data_picker_title">Dzień zbrodni</string>
+    <string name="new_crime">Nowa zbrodnia</string>
+    <string name="show_subtitle">Pokaż Podtytuł</string>
+    <string name="hide_subtitle">Ukryj Podtytuł</string>
+    <string name="subtitle_format">%1$d zbrodni</string>
+    <string name="delete_crime">Usuń zbrodnie</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d zbrodnia</item>
+        <item quantity="few">%1$d zbrodni</item>
+        <item quantity="many">%1$d zbrodni</item>
+        <item quantity="other">%1$d zbrodnie</item>
+    </plurals>
+    <string name="crime_suspect_text">Wskaż podejrzanego</string>
+    <string name="crime_report_text">Wyslij raport</string>
+    <string name="crime_report">%1$s!
+        Zbrodnia zaszła %2$s, %3$s, i %4$s
+    </string>
+    <string name="crime_report_solved">Sprawa rozwiązana</string>
+    <string name="crime_report_unsolved">Sprawa nie rozwiązana</string>
+    <string name="crime_report_no_suspect">brak podejrzanego.</string>
+    <string name="crime_report_suspect">podejrzany to %s.</string>
+    <string name="crime_report_subject">CriminalIntent Raport Zbrodni</string>
+    <string name="send_report">Wyslij raport przez</string>
+    <string name="call_suspect">Zadzwoń do podejrzanego</string>
+    <string name="data">Data</string>
+    <string name="ok_button_date">OK</string>
+</resources>
