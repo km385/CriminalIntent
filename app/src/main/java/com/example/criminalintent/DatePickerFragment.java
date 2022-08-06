@@ -45,15 +45,20 @@ public class DatePickerFragment extends AppCompatDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Date date;
+        if(getResources().getBoolean(R.bool.isTablet)){
+            date = (Date) getArguments().getSerializable(ARG_DATE);
+        }else{
+            Intent intent = getActivity().getIntent();
+            date = (Date) intent.getSerializableExtra(DatePickerActivity.EXTRA_CRIME_ID);
+        }
 
-        Intent intent = getActivity().getIntent();
-        Date crimeDate = (Date) intent.getSerializableExtra(DatePickerActivity.EXTRA_CRIME_ID);
 
         View v = inflater.inflate(R.layout.dialog_date, container, false);
 
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(crimeDate);
+        calendar.setTime(date);
 
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -73,10 +78,18 @@ public class DatePickerFragment extends AppCompatDialogFragment {
                 date.set(Calendar.YEAR, year);
                 date.set(Calendar.MONTH, month);
                 date.set(Calendar.DAY_OF_MONTH, day);
-                Intent intent = new Intent();
-                intent.putExtra("siema", date.getTime());
-                getActivity().setResult(Activity.RESULT_OK, intent);
-                getActivity().finish();
+
+                if(getResources().getBoolean(R.bool.isTablet)){
+                    Bundle result = new Bundle();
+                    result.putSerializable("date", date.getTime());
+                    getParentFragmentManager().setFragmentResult("requestKey", result);
+                    dismiss();
+                }else{
+                    Intent intent = new Intent();
+                    intent.putExtra("siema", date.getTime());
+                    getActivity().setResult(Activity.RESULT_OK, intent);
+                    getActivity().finish();
+                }
             }
         });
 

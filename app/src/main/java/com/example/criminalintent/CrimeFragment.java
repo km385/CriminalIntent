@@ -236,16 +236,16 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentManager manager = getChildFragmentManager();
-//                DatePickerFragment dialog = DatePickerFragment
-//                        .newInstance(mCrime.getDate());
-//                dialog.show(manager, DIALOG_DATE);
 
-                Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getDate());
-//                startActivity(intent);
-
-
-                mSetDate.launch(intent);
+                if(getResources().getBoolean(R.bool.isTablet)){
+                    FragmentManager manager = getChildFragmentManager();
+                    DatePickerFragment dialog = DatePickerFragment
+                            .newInstance(mCrime.getDate());
+                    dialog.show(manager, DIALOG_DATE);
+                }else{
+                    Intent intent = DatePickerActivity.newIntent(getActivity(), mCrime.getDate());
+                    mSetDate.launch(intent);
+                }
             }
         });
 
@@ -256,6 +256,7 @@ public class CrimeFragment extends Fragment {
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                         Date date = (Date) result.getSerializable("date");
                         mCrime.setDate(date);
+                        updateCrime();
                         updateDate();
                     }
                 });
