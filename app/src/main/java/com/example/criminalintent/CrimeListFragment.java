@@ -3,6 +3,7 @@ package com.example.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +28,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class CrimeListFragment extends Fragment {
     private static final int REQUEST_CRIME = 1;
@@ -227,6 +230,11 @@ public class CrimeListFragment extends Fragment {
             mTitleTextView.setText(mCrime.getTitle());
             mDateTextView.setText(new SimpleDateFormat("EEEE, MMM dd, yyyy").format(mCrime.getDate()));
             mSolvedImage.setVisibility(mCrime.isSolved() ? View.VISIBLE : View.GONE);
+            if(mCrime.isSolved()){
+                mSolvedImage.setContentDescription("crime solved");
+            }else{
+                mSolvedImage.setContentDescription("crime not yet solved");
+            }
         }
 
         @Override

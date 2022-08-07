@@ -28,4 +28,7 @@
     <string name="call_suspect">Call suspect</string>
     <string name="data">Data</string>
     <string name="ok_button_date">OK</string>
+    <string name="crime_photo_button_description">Take photo of crime scene</string>
+    <string name="crime_photo_no_image_description">Crime scene photo (not set)</string>
+    <string name="crime_photo_image_description">Crime scene photo (set)</string>
 </resources>
