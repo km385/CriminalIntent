@@ -199,6 +199,12 @@ public class CrimeFragment extends Fragment {
 
                     updateCrime();
                     updatePhotoView();
+                    mPhotoView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPhotoButton.announceForAccessibility("the photo has changed");
+                        }
+                    }, 50);
                 }
             }
     );
